@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>Изначальный текст:</h2>
+    <p class="text">
+      One: 'Hi Mary.' Two: 'Oh, hi.' One: 'How are you doing?' Two: 'I'm doing
+      alright. How about you?' One: 'Not too bad. The weather is great isn't
+      it?' Two: 'Yes. It's absolutely beautiful today.' One: 'I wish it was like
+      this more frequently.' Two: 'Me too.' One: 'So where are you going now?'
+      Two: 'I'm going to meet a friend of mine at the department store.'
+      One: 'Going to do a little shopping?' Two: 'Yeah, I have to buy some
+      presents for my parents.' One: 'What's the occasion?' Two: 'It's their
+      anniversary.' One: 'That's great. Well, you better get going. You don't
+      want to be late.' Two: 'I'll see you next time.' One: 'Sure. Bye.'
+    </p>
+    <h2>Измененный текст:</h2>
+    <div class="textChanged"></div>
+    <hr />
+    <div class="content clearfix">
+      <!-- begin post  -->
+      <div class="post">
+        <h1>Форма обратной связи</h1>
+        <p class="description">
+    Форма обратной связи служит для отправки сообщений владельцу сайта от посетителей. В специальные поля вводятся специальные данные (имя, электронная почта, текст). Для отправки сообщения на е-мейл владельцу сайта, необходимо нажать на кнопку «Отправить», может быть и другой вариант.
+    Зачем нужна форма обратной связи?
+    На любом сайте должен быть е-мейл владельца сайта. Лучше будет, если он будет в виде стандартной ссылки, при нажатии на которую посетитель сможет не заполнять поля адресата, а сразу же перейти к написанию письма в своей почтовой программе.
+        </p>
+    
+    <div id="inline">
+      <h2>Онлайн заявка</h2>
+      <form id="contact" name="contact" action="#" method="post">
+        <input type="name" id="name" name="name" class="txt field" placeholder="Ваше имя">
+        <input type="phone" id="phone" name="phone" class="txt field" placeholder="Ваш телефон">
+        <input type="email" id="email" name="email" class="txt field" placeholder="Ваш e-mail"> 
+        <textarea id="msg" name="msg" class="txtarea field"  placeholder="Ваше сообщение:"></textarea>
+        <button id="send">Отправить</button>
+      </form>
+    </div>
+   
+    </div>
+    <script>
+      let text = document.querySelector(".text").textContent;
+      let textChanged = document.querySelector(".textChanged");
+      let res, res2;
+      console.log(text);
+      function regExp(str) {
+        res = str.replace(/^'|(\s)'|'(\s)|'$/g, '$1"$2');
+        // res2 = str.replace(/(One*\:(\s)\')/gi, "\r\nOne1: ");
+        //ищем в начале строки (^') ИЛИ после пустого пространства (\s)' ИЛИ до пустого пространства '(\s) ИЛИ в конце строки('$). $1"$2 - шаблоны замены, определяют последовательность заменяемых символов(если поменять 1 и 2 местами, то после двойных кавычек будет ставиться пробел)
+        return res;
+      }
+      regExp(text);
+      textChanged.textContent = res;
+    </script>
+  </body>
+</html>
