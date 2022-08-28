@@ -37,9 +37,12 @@
       <h2>Онлайн заявка</h2>
       <form id="contact" name="contact" action="#" method="post">
         <input type="name" id="name" name="name" class="txt field" placeholder="Ваше имя">
+        <p class="error hidden">Поле не заполнено</p>
         <input type="phone" id="phone" name="phone" class="txt field" placeholder="Ваш телефон">
+        <p class="error hidden">Поле не заполнено</p>
         <input type="email" id="email" name="email" class="txt field" placeholder="Ваш e-mail"> 
-        <textarea id="msg" name="msg" class="txtarea field"  placeholder="Ваше сообщение:"></textarea>
+        <p class="error hidden">Поле не заполнено</p>
+        <textarea id="msg" name="msg" class="txtarea"  placeholder="Ваше сообщение:"></textarea>
         <button id="send">Отправить</button>
       </form>
     </div>
@@ -58,7 +61,7 @@
       }
       regExp(text);
       textChanged.textContent = res;
-      
+
 // Валидация формы обратной связи
 
       let name = document.querySelector('#name');
@@ -67,21 +70,18 @@
       let msg = document.querySelector('#msg');
       let send = document.querySelector('#send');
       let fields = document.querySelectorAll('.field')
-      let nameResult;
-      let phoneResult;
-      let emailResult;
-      let msgResult;
       let namePattern = /^[а-яёА-ЯЁ\s]+$/gi;
       let phonePattern = /((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}/gi;
       let emailPattern = /[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}/igm;
 
 //Проверка на пустые поля
-      let checkFieldsPresence = ()=>{
+      let checkFieldsPresence = ()=>{        
         for (var i = 0; i < fields.length; i++) {
-          if (!fields[i].value) {
-            console.log('field is blank', fields[i])
+          if (fields[i].value === '') {
             fields[i].classList.add('red');
-          }else if(fields[i].value && fields[i].classList.contains('red')){
+            fields[i].nextElementSibling.classList.remove('hidden');
+          }else{
+            fields[i].nextElementSibling.classList.add('hidden');
             fields[i].classList.remove('red');
             console.log(`Поле ${fields[i].placeholder} заполнено верно!`)
           }
@@ -89,58 +89,32 @@
       }
 // Проверка на соответствие шаблонам regExp
       let validateForm = ()=>{
-        name.onchange = () =>{
-          nameResult = name.value;
-          return nameResult;
-        };
-
-        phone.onchange = () =>{
-          phoneResult = phone.value;
-          return phoneResult;
-        };
-
-        email.onchange = () =>{
-          emailResult = email.value;
-          return emailResult;
-        };
-
-        msg.onchange = () =>{
-          msgResult = msg.value;
-          return msgResult;
-        };
-
-        if(!(namePattern.test(nameResult))){
+        if(!namePattern.test(name.value)){
+          console.log(name.value)
           name.classList.add('red');
           alert("Имя содержит только буквы");
         }else{
-          name.classList.toggle('red');
-          alert("УРААААА !!!");
+          name.classList.remove('red');
         }
-        if(!phonePattern.test(phoneResult)){
+        if(!phonePattern.test(phone.value)){
           phone.classList.add('red');
           alert("Телефон имеет вид +7(000)000-0000");
         }else{
           phone.classList.remove('red');
-          alert("УРААААА !!!");
         }
-        if(!emailPattern.test(emailResult)){
+        if(!emailPattern.test(email.value)){
           email.classList.add('red');
           alert("E-mail имеет вид mymail@mail.ru, или my.mail@mail.ru, или my-mail@mail.ru");
         }else {
           email.classList.remove('red');
-          alert("УРААААА !!!");
         }
       }
 
       send.addEventListener('click', (evt) => {
         evt.preventDefault();
-        
-        console.log(namePattern.test(nameResult));
-        console.log(phonePattern.test(phoneResult));
-        console.log(emailPattern.test(emailResult));
-
         checkFieldsPresence();
-        validateForm()
+        validateForm();
+
       });
     </script>
   </body>
